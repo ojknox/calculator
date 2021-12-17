@@ -3,19 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap" rel="stylesheet">
   <title>Frontend Mentor | Calculator app</title>
 </head>
-<body>
-  
-
-
-  
+<body class="theme1">
+  <header>
+    <div>
+      <h3>calc</h3>
+    </div>
+    <div>
+      <span class='nametoggle'>THEME</span>
+      <div class='toggle'>
+        <input type='radio' name='toggle' id='theme1'>
+        <label>1</label>
+        <input type='radio' name='toggle' id='theme2'>
+        <label>2</label>
+        <input type='radio' name='toggle' id=theme3>
+        <label>3</label>
+        <span id='toggle'></span>
+      </div>
+    </div>
+    
+  </header>
+  <div class='calculator'>
+    <div class='screen'>0</div>
+    <div class='keyboard'>
+      <div class='grid'>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class='special del' data-action='delete'>DEL</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button data-action='add'>+</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button data-action='subtract'>-</button>
+        <button data-action='decimal'>.</button>
+        <button>0</button>
+        <button data-action='divide'>/</button>
+        <button data-action='multiply'>x</button>
+        <button class='special reset' data-action='reset'>RESET</button>
+        <button class='equals' data-action='equals'>=</button> 
+      </div>
+    </div>
+  </div>
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Olivia Knox</a>.
   </div>
+  <script src="app.js"></script>
 </body>
 </html>
