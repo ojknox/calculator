@@ -28,23 +28,57 @@ theme3.onclick = () => {
 
 //Keyboard clicking
 const keys = document.querySelector('.grid');
+const display = document.querySelector('.screen');
+const calculator = document.querySelector('.calculator');
+
+const calculate = (n1, operator, n2) => {
+    let result = '';
+    if(operator === 'add') {
+        result = parseFloat(n1) + parseFloat(n2);
+    } else if(operator === 'subtract') {
+        result = parseFloat(n1) - parseFloat(n2);
+    } else if(operator === 'multiply') {
+        result = parseFloat(n1) * parseFloat(n2);
+    } else if(operator === 'divide') {
+        result = parseFloat(n1) / parseFloat(n2);
+    }
+    return result;
+}
 
 keys.addEventListener('click', e => {
     if(e.target.matches('button')){
         const key = e.target;
         const action = key.dataset.action;
+        const keyContent = key.textContent;
+        const displayContent = display.textContent;
 
-        if(!action) {
-            console.log('number key!')
-        } else {
-            console.log(action);
+        if(action === 'add' || action === 'subtract' || action === 'divide' || action === 'multiply') {
+            //note if operator key pressed
+            calculator.dataset.prevKey = 'operator';
+            //keep first value recorded
+            calculator.dataset.firstValue = displayContent;
+            //record action clicked
+            calculator.dataset.operator = action;
+        }
+
+        if(!action){
+            if(displayContent === '0' || calculator.dataset.prevKey === 'operator') {
+                display.textContent = keyContent;
+                calculator.dataset.prevKey = '';
+            } else {
+                display.textContent = displayContent + keyContent;
+            }
+        } else if(action === 'decimal') {
+            display.textContent = displayContent + '.';
+        } else if(action === 'reset') {
+            display.textContent = '0';
+        } else if(action === 'equals') {
+            const firstValue = calculator.dataset.firstValue;
+            const secondValue = displayContent;
+            const operator = calculator.dataset.operator;
+            display.textContent = calculate(firstValue, operator, secondValue);
         }
     }
 })
 
-//access text in the screen => if 0 replace with clicked number, if not 0 then append clicked number
-//to the number on the screen.
-
-//decimal = decimal should appear on the display. If number hit after decimal key then should be appended
-
-//
+//need to make more robust. 
