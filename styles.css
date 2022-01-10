@@ -15,6 +15,7 @@
     --key-equals-toggle-bg: hsl(6, 63%, 50%);
     --key-equals-shadow: hsl(6, 70%, 34%);
     --key-bg: hsl(30, 25%, 89%);
+    --key-bg-clicked: hsl(30, 25%, 80%);
     --key-shadow: hsl(28, 16%, 65%);
     --keypad-text-color: hsl(221, 14%, 31%);
 }
@@ -170,4 +171,8 @@ button.special {
 
 .attribution a {
     color: white;
+}
+
+.operator:active {
+    background-color: var(--key-bg-clicked);
 }

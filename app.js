@@ -31,6 +31,7 @@ const keys = document.querySelector('.grid');
 const display = document.querySelector('.screen');
 const calculator = document.querySelector('.calculator');
 
+//calculator function
 const calculate = (n1, operator, n2) => {
     let result = '';
     if(operator === 'add') {
@@ -45,6 +46,7 @@ const calculate = (n1, operator, n2) => {
     return result;
 }
 
+//listening for clicking on the calculator
 keys.addEventListener('click', e => {
     if(e.target.matches('button')){
         const key = e.target;
@@ -53,12 +55,24 @@ keys.addEventListener('click', e => {
         const displayContent = display.textContent;
 
         if(action === 'add' || action === 'subtract' || action === 'divide' || action === 'multiply') {
-            //note if operator key pressed
-            calculator.dataset.prevKey = 'operator';
-            //keep first value recorded
-            calculator.dataset.firstValue = displayContent;
-            //record action clicked
-            calculator.dataset.operator = action;
+            //if press another operator - check to see if already have a first value and operator
+            if(calculator.dataset.firstValue && calculator.dataset.operator && calculator.dataset.prevKey !== 'operator'){
+                const calcValue = calculate(calculator.dataset.firstValue, calculator.dataset.operator, displayContent);
+                console.log('calculated');
+                display.textContent = calcValue;
+                calculator.dataset.firstValue = calcValue;
+                console.log(calculator.dataset.firstValue);
+            } else {
+                //note if operator key pressed
+                calculator.dataset.prevKey = 'operator';
+                console.log(`prevKey = ${calculator.dataset.prevKey}`);
+                //keep first value recorded
+                calculator.dataset.firstValue = displayContent;
+                console.log(`firstValue = ${calculator.dataset.firstValue}`);
+                //record action clicked
+                calculator.dataset.operator = action;  
+                console.log(`operator = ${calculator.dataset.operator}`); 
+            }
         }
 
         if(!action){
@@ -68,17 +82,26 @@ keys.addEventListener('click', e => {
             } else {
                 display.textContent = displayContent + keyContent;
             }
-        } else if(action === 'decimal') {
-            display.textContent = displayContent + '.';
+        } else if(action === 'decimal' && !displayContent.includes('.')) {
+            if(calculator.dataset.prevKey === 'operator'){
+                display.textContent = '0.';
+                calculator.dataset.prevKey = '';
+            } else {
+                display.textContent = displayContent + '.';
+            }
         } else if(action === 'reset') {
             display.textContent = '0';
+            calculator.dataset.prevKey = '';
+            calculator.dataset.firstValue = '';
         } else if(action === 'equals') {
             const firstValue = calculator.dataset.firstValue;
             const secondValue = displayContent;
             const operator = calculator.dataset.operator;
             display.textContent = calculate(firstValue, operator, secondValue);
+            //reset screen
+            calculator.dataset.prevKey = 'operator';
         }
     }
 })
 
-//need to make more robust. 
+//onclick of operator buttons - make it look clicked - border shadow on click? 
