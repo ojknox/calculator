@@ -33,75 +33,93 @@ const calculator = document.querySelector('.calculator');
 
 //calculator function
 const calculate = (n1, operator, n2) => {
-    let result = '';
-    if(operator === 'add') {
-        result = parseFloat(n1) + parseFloat(n2);
-    } else if(operator === 'subtract') {
-        result = parseFloat(n1) - parseFloat(n2);
-    } else if(operator === 'multiply') {
-        result = parseFloat(n1) * parseFloat(n2);
-    } else if(operator === 'divide') {
-        result = parseFloat(n1) / parseFloat(n2);
-    }
-    return result;
+    const firstNum = parseFloat(n1);
+    const secondNum = parseFloat(n2);
+    if(operator === 'add') return firstNum + secondNum;
+    if(operator === 'subtract') return firstNum - secondNum;
+    if(operator === 'multiply') return firstNum * secondNum;
+    if(operator === 'divide') return firstNum / secondNum;
 }
 
 //listening for clicking on the calculator
 keys.addEventListener('click', e => {
     if(e.target.matches('button')){
-        const key = e.target;
-        const action = key.dataset.action;
-        const keyContent = key.textContent;
-        const displayContent = display.textContent;
 
-        if(action === 'add' || action === 'subtract' || action === 'divide' || action === 'multiply') {
-            //if press another operator - check to see if already have a first value and operator
-            if(calculator.dataset.firstValue && calculator.dataset.operator && calculator.dataset.prevKey !== 'operator'){
-                const calcValue = calculate(calculator.dataset.firstValue, calculator.dataset.operator, displayContent);
-                console.log('calculated');
-                display.textContent = calcValue;
-                calculator.dataset.firstValue = calcValue;
-                console.log(calculator.dataset.firstValue);
-            } else {
-                //note if operator key pressed
-                calculator.dataset.prevKey = 'operator';
-                console.log(`prevKey = ${calculator.dataset.prevKey}`);
-                //keep first value recorded
-                calculator.dataset.firstValue = displayContent;
-                console.log(`firstValue = ${calculator.dataset.firstValue}`);
-                //record action clicked
-                calculator.dataset.operator = action;  
-                console.log(`operator = ${calculator.dataset.operator}`); 
-            }
-        }
+        const key = e.target; //which html element clicked on 
+        const action = key.dataset.action; //logs action - if the button has one
+        const keyContent = key.textContent; //text in key pressed
+        const displayContent = display.textContent; //display content
+        const previousKeyType = calculator.dataset.previousKeyType //remember previous key
 
+        //if key doesn't have an action i.e. number key 
         if(!action){
-            if(displayContent === '0' || calculator.dataset.prevKey === 'operator') {
+            if(displayContent === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
                 display.textContent = keyContent;
-                calculator.dataset.prevKey = '';
             } else {
                 display.textContent = displayContent + keyContent;
             }
-        } else if(action === 'decimal' && !displayContent.includes('.')) {
-            if(calculator.dataset.prevKey === 'operator'){
+            calculator.dataset.previousKeyType = 'number';
+        }
+
+        //if press decimal key
+        if(action === 'decimal' && !displayContent.includes('.')) {
+            if(previousKeyType === 'operator' || previousKeyType === 'calculate'){
                 display.textContent = '0.';
-                calculator.dataset.prevKey = '';
             } else {
                 display.textContent = displayContent + '.';
             }
-        } else if(action === 'reset') {
-            display.textContent = '0';
-            calculator.dataset.prevKey = '';
-            calculator.dataset.firstValue = '';
-        } else if(action === 'equals') {
+            calculator.dataset.previousKeyType = 'decimal';
+        } 
+
+        //if press an operator key
+        if(action === 'add' || action === 'subtract' || action === 'divide' || action === 'multiply') {  
             const firstValue = calculator.dataset.firstValue;
-            const secondValue = displayContent;
             const operator = calculator.dataset.operator;
-            display.textContent = calculate(firstValue, operator, secondValue);
-            //reset screen
-            calculator.dataset.prevKey = 'operator';
+            const secondValue = displayContent;
+
+            if(firstValue && operator && previousKeyType !== 'operator' && previousKeyType !== 'calculate'){
+                const calcValue = calculate(firstValue, operator, secondValue);
+                display.textContent = calcValue;
+                calculator.dataset.firstValue = calcValue;
+            } else {
+                //keep first value recorded
+                calculator.dataset.firstValue = displayContent;
+            }
+
+            calculator.dataset.previousKeyType = 'operator';
+            calculator.dataset.operator = action;
+        }
+        
+        //pressing the reset button
+        if(action === 'reset') {
+            display.textContent = '0'
+            calculator.dataset.firstValue = '';
+            calculator.dataset.operator = '';
+            calculator.dataset.modValue = '';
+            calculator.dataset.previousKeyType = 'reset';
+        } 
+        
+        //pressing the equals button
+        if(action === 'equals') {
+            let firstValue = calculator.dataset.firstValue;
+            let secondValue = displayContent;
+            const operator = calculator.dataset.operator;
+
+            if(firstValue){
+                if(previousKeyType === 'calculate') {
+                    firstValue = displayContent;
+                    secondValue = calculator.dataset.modValue;
+                }
+                
+                display.textContent = calculate(firstValue, operator, secondValue);
+            } 
+            
+            calculator.dataset.modValue = secondValue;
+            calculator.dataset.previousKeyType = 'calculate';
         }
     }
 })
 
+//add in delete key functionality
+//cut the decimal points down on recurring numbers as going off screen. Have max number of digits on input and output. 
 //onclick of operator buttons - make it look clicked - border shadow on click? 
