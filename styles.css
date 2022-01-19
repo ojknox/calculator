@@ -51,7 +51,7 @@
 body { 
     margin: 70px auto;
     padding: 0;
-    width: 350px;
+    max-width: 350px;
     font-family: var(--main-font-family);
     background-color: var(--main-bg);
     color: var(--key-text-color);
@@ -120,10 +120,11 @@ label {
     border-radius: 5px;
     color: var(--key-text-color);
     background-color: var(--screen-bg);
+    overflow: scroll;
 }
 
 .keyboard {
-    padding: 15px;
+    padding: 20px;
     border-radius: 5px;
     background-color: var(--keypad-toggle-bg);
 }
@@ -131,7 +132,7 @@ label {
 .grid {
     display: grid;
     grid-template: repeat(5, 1fr) / repeat(4, 1fr);
-    gap: 10px;
+    gap: 15px;
 }
 
 button {
@@ -175,4 +176,35 @@ button.special {
 
 .operator:active {
     background-color: var(--key-bg-clicked);
+}
+
+@media only screen and (max-width: 480px) {
+    body {
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    h3 {
+        font-size: var(--main-font-size);
+    }
+
+    .nametoggle {
+        font-size: 10px;
+    }
+
+    header {
+        align-items: center;
+    }
+
+    .keyboard {
+        height: 350px;
+    }
+
+    .grid {
+        height: 100%;
+    }
+
+    button {
+        box-shadow: 0 4px var(--key-shadow);
+    }
 }

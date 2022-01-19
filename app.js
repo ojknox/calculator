@@ -97,6 +97,18 @@ keys.addEventListener('click', e => {
             calculator.dataset.operator = '';
             calculator.dataset.modValue = '';
             calculator.dataset.previousKeyType = 'reset';
+        }
+        
+        //pressing the delete button
+        if(action === 'delete') {
+            if(displayContent.length > 1) {
+                let editedContent = displayContent.slice(0,-1);
+                display.textContent = editedContent;
+            }
+            
+            if(displayContent.length === 1) {
+                display.textContent = '0';
+            }
         } 
         
         //pressing the equals button
@@ -120,6 +132,4 @@ keys.addEventListener('click', e => {
     }
 })
 
-//add in delete key functionality
-//cut the decimal points down on recurring numbers as going off screen. Have max number of digits on input and output. 
 //onclick of operator buttons - make it look clicked - border shadow on click? 
