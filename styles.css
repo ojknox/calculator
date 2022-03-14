@@ -120,7 +120,7 @@ label {
     border-radius: 5px;
     color: var(--key-text-color);
     background-color: var(--screen-bg);
-    overflow: scroll;
+    overflow: auto;
 }
 
 .keyboard {
