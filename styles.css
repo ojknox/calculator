@@ -2,7 +2,7 @@
     --main-font-size: 32px;
     --keypad-font-size: 24px;
     --keypad-special-font-size: 16px;
-    --main-font-family: Spartan;
+    --main-font-family: Spartan, sans-serif;
     --key-text-color: white;
 }
 
