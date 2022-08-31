@@ -1,7 +1,7 @@
 # Frontend Mentor - Calculator app solution
 
 This is a solution to the [Calculator app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/calculator-app-9lteq5N29).
- 
+
 ## Table of contents
 
 - [Overview](#overview)
@@ -21,6 +21,14 @@ Users should be able to:
 - Perform mathmatical operations like addition, subtraction, multiplication, and division
 - Adjust the color theme based on their preference
 
+### Screenshot
+
+![](./screenshot.jpg)
+
+### Links
+
+- Solution URL: [https://ojknox.github.io/calculator/](https://ojknox.github.io/calculator/)
+
 ## My process
 
 ### Built with
@@ -33,4 +41,4 @@ Users should be able to:
 
 ### Useful resources
 
-- [Free code camp](https://www.freecodecamp.org/news/how-to-build-an-html-calculator-app-from-scratch-using-javascript-4454b8714b98/) - This really helped me keep moving forward while learning. 
+- [Free code camp](https://www.freecodecamp.org/news/how-to-build-an-html-calculator-app-from-scratch-using-javascript-4454b8714b98/) - This really helped me keep moving forward while learning.
